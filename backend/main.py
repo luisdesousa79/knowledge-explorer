@@ -1,3 +1,4 @@
+from pathlib import Path
 from pydantic import BaseModel
 from fastapi import FastAPI, UploadFile
 
@@ -27,12 +28,22 @@ def create_user(user: UserCreate):
 @app.post("/documents")
 async def upload_document(file: UploadFile):
 
+    uploads_dir = Path("uploads")
+    uploads_dir.mkdir(exist_ok=True)
+
+    destination = uploads_dir / file.filename
+
+    
+
     contents = await file.read()
 
     print(type(contents))
 
     print(len(contents))
 
+    with open(destination, "wb") as f:
+        f.write(contents)
+    
     return {
         "filename": file.filename,
         "size": len(contents)
