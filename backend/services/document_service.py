@@ -6,5 +6,5 @@ async def save_document(filename: str, contents: bytes) -> None:
     UPLOADS_DIR.mkdir(exist_ok=True)
     destination = UPLOADS_DIR / filename
     with open(destination, "wb") as file:
-    file.write(contents)
+        file.write(contents)
 
